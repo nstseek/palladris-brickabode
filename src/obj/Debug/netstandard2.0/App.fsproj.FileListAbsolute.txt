@@ -1,0 +1,8 @@
+/home/nstseek/Git/Palladris-BrickAbode/src/bin/Debug/netstandard2.0/App.deps.json
+/home/nstseek/Git/Palladris-BrickAbode/src/bin/Debug/netstandard2.0/App.dll
+/home/nstseek/Git/Palladris-BrickAbode/src/bin/Debug/netstandard2.0/App.pdb
+/home/nstseek/Git/Palladris-BrickAbode/src/obj/Debug/netstandard2.0/App.fsprojAssemblyReference.cache
+/home/nstseek/Git/Palladris-BrickAbode/src/obj/Debug/netstandard2.0/App.AssemblyInfoInputs.cache
+/home/nstseek/Git/Palladris-BrickAbode/src/obj/Debug/netstandard2.0/App.AssemblyInfo.fs
+/home/nstseek/Git/Palladris-BrickAbode/src/obj/Debug/netstandard2.0/App.dll
+/home/nstseek/Git/Palladris-BrickAbode/src/obj/Debug/netstandard2.0/App.pdb

@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "H0JshpZrbPw1wMJbV0QzJLgj/fwnY5lAOvhbELoXTtHZc9yyqW5bIoxWMa0TZtQO8fM/patuKfjNoBzeYxtE5Q==",
+  "success": true,
+  "projectFilePath": "/home/nstseek/Git/Palladris-BrickAbode/src/App.fsproj",
+  "expectedPackageFiles": [
+    "/home/nstseek/.nuget/packages/fable.browser.blob/1.1.0/fable.browser.blob.1.1.0.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/fable.browser.dom/2.2.0/fable.browser.dom.2.2.0.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/fable.browser.event/1.2.1/fable.browser.event.1.2.1.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/fable.browser.webstorage/1.0.0/fable.browser.webstorage.1.0.0.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/fable.core/3.2.3/fable.core.3.2.3.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/fsharp.core/4.7.2/fsharp.core.4.7.2.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/nstseek/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
