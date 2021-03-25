@@ -1,5 +1,5 @@
-import { isValid } from "./Int32.js";
-import * as LongLib from "./lib/long.js";
+import { isValid } from './Int32.js';
+import * as LongLib from './lib/long.js';
 export default LongLib.Long;
 export const get_Zero = LongLib.ZERO;
 export const get_One = LongLib.ONE;
@@ -39,104 +39,127 @@ export const getHighBits = LongLib.getHighBits;
 export const getLowBitsUnsigned = LongLib.getLowBitsUnsigned;
 export const getHighBitsUnsigned = LongLib.getHighBitsUnsigned;
 function getMaxValue(unsigned, radix, isNegative) {
-    switch (radix) {
-        case 2: return unsigned ?
-            "1111111111111111111111111111111111111111111111111111111111111111" :
-            (isNegative ? "1000000000000000000000000000000000000000000000000000000000000000"
-                : "111111111111111111111111111111111111111111111111111111111111111");
-        case 8: return unsigned ?
-            "1777777777777777777777" :
-            (isNegative ? "1000000000000000000000" : "777777777777777777777");
-        case 10: return unsigned ?
-            "18446744073709551615" :
-            (isNegative ? "9223372036854775808" : "9223372036854775807");
-        case 16: return unsigned ?
-            "FFFFFFFFFFFFFFFF" :
-            (isNegative ? "8000000000000000" : "7FFFFFFFFFFFFFFF");
-        default: throw new Error("Invalid radix.");
-    }
+  switch (radix) {
+    case 2:
+      return unsigned
+        ? '1111111111111111111111111111111111111111111111111111111111111111'
+        : isNegative
+        ? '1000000000000000000000000000000000000000000000000000000000000000'
+        : '111111111111111111111111111111111111111111111111111111111111111';
+    case 8:
+      return unsigned
+        ? '1777777777777777777777'
+        : isNegative
+        ? '1000000000000000000000'
+        : '777777777777777777777';
+    case 10:
+      return unsigned
+        ? '18446744073709551615'
+        : isNegative
+        ? '9223372036854775808'
+        : '9223372036854775807';
+    case 16:
+      return unsigned
+        ? 'FFFFFFFFFFFFFFFF'
+        : isNegative
+        ? '8000000000000000'
+        : '7FFFFFFFFFFFFFFF';
+    default:
+      throw new Error('Invalid radix.');
+  }
 }
 export function abs(x) {
-    if (!x.unsigned && LongLib.isNegative(x)) {
-        return op_UnaryNegation(x);
-    }
-    else {
-        return x;
-    }
+  if (!x.unsigned && LongLib.isNegative(x)) {
+    return op_UnaryNegation(x);
+  } else {
+    return x;
+  }
 }
 export function fromInteger(value, unsigned, kind) {
-    let x = value;
-    let xh = 0;
-    switch (kind) {
-        case 0:
-            x = value << 24 >> 24;
-            xh = x;
-            break;
-        case 4:
-            x = value << 24 >>> 24;
-            break;
-        case 1:
-            x = value << 16 >> 16;
-            xh = x;
-            break;
-        case 5:
-            x = value << 16 >>> 16;
-            break;
-        case 2:
-            x = value >> 0;
-            xh = x;
-            break;
-        case 6:
-            x = value >>> 0;
-            break;
-    }
-    return LongLib.fromBits(x, xh >> 31, unsigned);
+  let x = value;
+  let xh = 0;
+  switch (kind) {
+    case 0:
+      x = (value << 24) >> 24;
+      xh = x;
+      break;
+    case 4:
+      x = (value << 24) >>> 24;
+      break;
+    case 1:
+      x = (value << 16) >> 16;
+      xh = x;
+      break;
+    case 5:
+      x = (value << 16) >>> 16;
+      break;
+    case 2:
+      x = value >> 0;
+      xh = x;
+      break;
+    case 6:
+      x = value >>> 0;
+      break;
+  }
+  return LongLib.fromBits(x, xh >> 31, unsigned);
 }
 export function parse(str, style, unsigned, _bitsize, radix) {
-    const res = isValid(str, style, radix);
-    if (res != null) {
-        const lessOrEqual = (x, y) => {
-            const len = Math.max(x.length, y.length);
-            return x.padStart(len, "0") <= y.padStart(len, "0");
-        };
-        const isNegative = res.sign === "-";
-        const maxValue = getMaxValue(unsigned || res.radix !== 10, res.radix, isNegative);
-        if (lessOrEqual(res.digits.toUpperCase(), maxValue)) {
-            str = isNegative ? res.sign + res.digits : res.digits;
-            return LongLib.fromString(str, unsigned, res.radix);
-        }
+  const res = isValid(str, style, radix);
+  if (res != null) {
+    const lessOrEqual = (x, y) => {
+      const len = Math.max(x.length, y.length);
+      return x.padStart(len, '0') <= y.padStart(len, '0');
+    };
+    const isNegative = res.sign === '-';
+    const maxValue = getMaxValue(
+      unsigned || res.radix !== 10,
+      res.radix,
+      isNegative
+    );
+    if (lessOrEqual(res.digits.toUpperCase(), maxValue)) {
+      str = isNegative ? res.sign + res.digits : res.digits;
+      return LongLib.fromString(str, unsigned, res.radix);
     }
-    throw new Error("Input string was not in a correct format.");
+  }
+  throw new Error('Input string was not in a correct format.');
 }
 export function tryParse(str, style, unsigned, bitsize, defValue) {
-    try {
-        defValue.contents = parse(str, style, unsigned, bitsize);
-        return true;
-    }
-    catch (_a) {
-        return false;
-    }
+  try {
+    defValue.contents = parse(str, style, unsigned, bitsize);
+    return true;
+  } catch (_a) {
+    return false;
+  }
 }
 export function unixEpochMillisecondsToTicks(ms, offset) {
-    return op_Multiply(op_Addition(op_Addition(LongLib.fromNumber(ms), 62135596800000), offset), 10000);
+  return op_Multiply(
+    op_Addition(op_Addition(LongLib.fromNumber(ms), 62135596800000), offset),
+    10000
+  );
 }
 export function ticksToUnixEpochMilliseconds(ticks) {
-    return LongLib.toNumber(op_Subtraction(op_Division(ticks, 10000), 62135596800000));
+  return LongLib.toNumber(
+    op_Subtraction(op_Division(ticks, 10000), 62135596800000)
+  );
 }
 export function makeRangeStepFunction(step, last, unsigned) {
-    const stepComparedWithZero = LongLib.compare(step, unsigned ? LongLib.UZERO : LongLib.ZERO);
-    if (stepComparedWithZero === 0) {
-        throw new Error("The step of a range cannot be zero");
+  const stepComparedWithZero = LongLib.compare(
+    step,
+    unsigned ? LongLib.UZERO : LongLib.ZERO
+  );
+  if (stepComparedWithZero === 0) {
+    throw new Error('The step of a range cannot be zero');
+  }
+  const stepGreaterThanZero = stepComparedWithZero > 0;
+  return (x) => {
+    const comparedWithLast = LongLib.compare(x, last);
+    if (
+      (stepGreaterThanZero && comparedWithLast <= 0) ||
+      (!stepGreaterThanZero && comparedWithLast >= 0)
+    ) {
+      return [x, op_Addition(x, step)];
+    } else {
+      return undefined;
     }
-    const stepGreaterThanZero = stepComparedWithZero > 0;
-    return (x) => {
-        const comparedWithLast = LongLib.compare(x, last);
-        if ((stepGreaterThanZero && comparedWithLast <= 0)
-            || (!stepGreaterThanZero && comparedWithLast >= 0)) {
-            return [x, op_Addition(x, step)];
-        }
-        else {
-            return undefined;
-        }
-    };
+  };
 }
