@@ -5,7 +5,7 @@ import Blotter from './components/Blotter/Blotter.jsx';
 import './App.scss';
 
 function App() {
-  const [blotter, setBlotter] = useState(false);
+  const [blotter, setBlotter] = useState(true);
 
   return (
     <div className='App'>

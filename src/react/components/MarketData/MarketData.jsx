@@ -2,61 +2,54 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import SelectList from '../SelectList/SelectList.jsx';
 import Select from '../../components/Select/Select.jsx';
 import Input from '../../components/Input/Input.jsx';
-import getRandomColor from '../../utils/randomColor';
 import getRandomData from '../../utils/randomData';
+import providers from '../../data/providers';
 import Chart from 'chart.js';
 import './MarketData.scss';
+import moment from 'moment';
+
+const chartResolution = 7;
 
 const MarketData = () => {
   const [selectedProviders, setSelectedProviders] = useState([]);
   const [providerChartData, setProviderChartData] = useState([]);
+  const [startDate, setStartDate] = useState('2021-03-25T22:00');
+  const [endDate, setEndDate] = useState('2021-03-26T04:00');
   const chartRef = useRef(null);
-  const providers = [
-    { key: 'CBOE', value: 1 },
-    { key: 'TSOU', value: 2 },
-    { key: 'CHKS', value: 3 },
-    { key: 'POTV', value: 4 },
-    { key: 'QVZA', value: 5 }
-  ];
 
   useEffect(() => {
-    const newChartData = selectedProviders.map(({ key }) => {
-      const color = getRandomColor();
+    const newChartData = selectedProviders.map(({ key, color }) => {
+      const data = [];
+      for (let i = 0; i < chartResolution; i++) {
+        data.push(getRandomData());
+      }
       return {
         label: key,
         backgroundColor: color,
         borderColor: color,
-        data: [
-          getRandomData(),
-          getRandomData(),
-          getRandomData(),
-          getRandomData(),
-          getRandomData(),
-          getRandomData(),
-          getRandomData()
-        ],
+        data,
         fill: false
       };
     });
     setProviderChartData(newChartData);
-  }, [selectedProviders]);
+  }, [selectedProviders, startDate, endDate]);
 
   useLayoutEffect(() => {
     if (chartRef.current) {
       chartRef.current.destroy();
     }
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const secDiff = end.diff(start, 'seconds');
+    const stepSize = secDiff / 7;
+    const steps = [];
+    for (let i = 0; i < chartResolution; i++) {
+      steps.push(moment(start).add(stepSize * (i + 1), 'seconds'));
+    }
     const config = {
       type: 'line',
       data: {
-        labels: [
-          '22:00:00',
-          '23:00:00',
-          '00:00:00',
-          '01:00:00',
-          '02:00:00',
-          '03:00:00',
-          '04:00:00'
-        ],
+        labels: steps.map((mnt) => mnt.format('DD/MM/yyyy hh:mm')),
         datasets: [...providerChartData]
       },
       options: {
@@ -84,6 +77,10 @@ const MarketData = () => {
           xAxes: [
             {
               display: true,
+              gridLines: {
+                color: '#4b779c',
+                zeroLineColor: '#fff'
+              },
               ticks: {
                 fontColor: 'white'
               },
@@ -95,6 +92,10 @@ const MarketData = () => {
           yAxes: [
             {
               display: true,
+              gridLines: {
+                color: '#4b779c',
+                zeroLineColor: '#fff'
+              },
               ticks: {
                 fontColor: 'white'
               },
@@ -118,34 +119,7 @@ const MarketData = () => {
           id='provider'
           options={providers}
           selected={selectedProviders}
-          onChange={(event) => {
-            if (
-              selectedProviders.find(
-                (provider) => provider.value === Number(event.target.value)
-              )
-            ) {
-              return;
-            }
-
-            const provider = providers.find(
-              (provider) => provider.value === Number(event.target.value)
-            );
-
-            if (provider) {
-              setSelectedProviders([...selectedProviders, provider]);
-            }
-          }}
-          onRemove={(value) => {
-            const providerIndex = selectedProviders.findIndex(
-              (provider) => provider.value === value
-            );
-
-            if (providerIndex >= 0) {
-              const tmpSelectedProviders = [...selectedProviders];
-              tmpSelectedProviders.splice(providerIndex, 1);
-              setSelectedProviders(tmpSelectedProviders);
-            }
-          }}
+          update={setSelectedProviders}
         />
         <Select
           label='pair'
@@ -156,13 +130,21 @@ const MarketData = () => {
           label='start'
           id='start'
           type='datetime-local'
-          value='2021-03-25T22:00'
+          value={startDate}
+          onChange={(event) => setStartDate(event.target.value)}
         />
         <Input
           label='end'
           id='end'
           type='datetime-local'
-          value='2021-03-26T16:00'
+          value={endDate}
+          onChange={(event) => {
+            if (moment(event.target.value) < moment(startDate)) {
+              alert('The end date must be greater than start date');
+              return;
+            }
+            setEndDate(event.target.value);
+          }}
         />
       </div>
       <canvas id='chart' width='400' height='250'></canvas>

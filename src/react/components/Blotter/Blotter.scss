@@ -1,0 +1,64 @@
+div.Blotter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  div.header {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    div.title {
+      color: white;
+      h1 {
+        margin: 8px 0;
+      }
+    }
+    div.parameters {
+      display: flex;
+      flex-direction: column;
+      button.return {
+        margin-top: 21px;
+        width: max-content;
+        padding: 8px 13px;
+        background-color: white;
+        border: 0;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: filter 0.2s ease-in-out;
+        &:hover {
+          filter: brightness(0.9);
+        }
+        &:active {
+          filter: brightness(0.8);
+        }
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    div.data {
+      table {
+        border-collapse: collapse;
+        background-color: #002e54;
+        height: 120px;
+        tbody {
+          tr {
+            height: 40px;
+          }
+          td,
+          th {
+            padding: 8px;
+            text-align: start;
+            border: 1px solid white;
+          }
+          td {
+            color: white;
+          }
+          th {
+            color: #58c9d0;
+          }
+        }
+      }
+    }
+  }
+}
