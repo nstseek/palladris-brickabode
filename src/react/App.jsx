@@ -23,7 +23,9 @@ function App() {
             Blotter
           </div>
         </div>
-        {blotter ? <Blotter /> : <MarketData />}
+        <div className='card-container'>
+          {blotter ? <Blotter /> : <MarketData />}
+        </div>
       </div>
     </div>
   );

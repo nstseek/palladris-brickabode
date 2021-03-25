@@ -21,11 +21,13 @@ div.App {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
     div.selector {
       border-radius: 5px;
       border: 1px solid white;
       display: flex;
       overflow: hidden;
+      margin-bottom: 25px;
       div.option {
         display: flex;
         padding: 10px 16px;
@@ -47,6 +49,16 @@ div.App {
           }
         }
       }
+    }
+    div.card-container {
+      width: Min(1000px, 100%);
+      height: 800px;
+      background-color: rgba(0, 46, 84, 0.8);
+      box-shadow: 0 0 25px 8px rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 34px;
     }
   }
 }

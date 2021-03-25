@@ -1,0 +1,47 @@
+@import '../../scss/forms.scss';
+
+div.SelectList {
+  div.select-list {
+    position: relative;
+    width: 300px;
+    select {
+      width: 100%;
+    }
+    div.selected-options {
+      font-size: 0.8rem;
+      border-radius: 5px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      width: calc(100% - 21px);
+      background-color: white;
+      height: 100%;
+      top: 0;
+      div.option {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        background-color: #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        color: #444;
+        cursor: pointer;
+        transition: filter 0.2s ease-in-out;
+        b {
+          color: black;
+          display: flex;
+          align-items: center;
+          margin-left: 5px;
+          font-size: 0.55rem;
+        }
+        &:hover {
+          filter: brightness(0.8);
+        }
+        &:not(:first-child) {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}

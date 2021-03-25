@@ -1,0 +1,25 @@
+div.Input,
+div.Select,
+div.SelectList {
+  display: flex;
+  flex-direction: column;
+  label {
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: white;
+    font-size: 0.8rem;
+  }
+}
+
+input,
+select,
+div.input-style {
+  background-color: white;
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 5px;
+  height: 40px;
+  &:focus {
+    outline: none;
+  }
+}
